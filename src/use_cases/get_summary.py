@@ -1,6 +1,3 @@
-import math
-
-
 def get_summary(data=[]):
     banks_summary = {}
     banks_list = set([moviment["bank"] for moviment in data])

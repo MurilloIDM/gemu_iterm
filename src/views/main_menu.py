@@ -14,10 +14,9 @@ def render_main_menu():
 
     console.print("\n")
     console.print("1️⃣    [#F2E205]Visualizar finanças de um mês[/#F2E205]")
-    console.print("2️⃣    [#F2B705]Exportar finanças de um mês[/#F2B705]")
-    console.print("3️⃣    [#A6774E]Gerenciar movimentação de entrada/saída[/#A6774E]")
-    console.print("4️⃣    [#8C1C03]Sair[/#8C1C03]\n")
+    console.print("2️⃣    [#A6774E]Gerenciar movimentação de entrada/saída[/#A6774E]")
+    console.print("3️⃣    [#8C1C03]Sair[/#8C1C03]\n")
 
-    option = Prompt.ask("Digite a opção desejada", choices=["1", "2", "3", "4"])
+    option = Prompt.ask("Digite a opção desejada", choices=["1", "2", "3"])
 
     return option

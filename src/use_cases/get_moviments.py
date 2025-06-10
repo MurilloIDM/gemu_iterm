@@ -1,64 +1,28 @@
-import re
+from rich.console import Console
 
-MOCK_DATA = [
-    {
-        "id": 1,
-        "description": "Saque",
-        "bank": "ITAÚ",
-        "type": "SAÍDA",
-        "period": "MENSAL",
-        "date": "10/06/2025",
-        "value": 22.5,
-        "completed": False
-    },
-    {
-        "id": 2,
-        "description": "Transferência Nubank",
-        "bank": "ITAÚ",
-        "type": "ENTRADA",
-        "period": "MENSAL",
-        "date": "10/06/2025",
-        "value": 100,
-        "completed": False
-    },
-    {
-        "id": 3,
-        "description": "Serviços - IDEM Tecnologia",
-        "bank": "NUBANK",
-        "type": "ENTRADA",
-        "period": "MENSAL",
-        "date": "10/06/2025",
-        "value": 1000,
-        "completed": False
-    },
-    {
-        "id": 4,
-        "description": "Fatura cartão",
-        "bank": "NUBANK",
-        "type": "SAÍDA",
-        "period": "MENSAL",
-        "date": "10/06/2025",
-        "value": 234.23,
-        "completed": False
-    },
-    {
-        "id": 4,
-        "description": "Viagem João Pessoa",
-        "bank": "NUBANK",
-        "type": "SAÍDA",
-        "period": "MENSAL",
-        "date": "15/06/2025",
-        "value": 123.88,
-        "completed": False
-    },
-]
+from utils.clean_view import clean_view
+
+console = Console()
 
 
-def get_moviments(period):
-    # TODO: Implementar loader para consulta
-    # TODO: Agrupar e ordenar por mês, tipo (consulta banco)
-    moviments = list(filter(lambda moviment: re.search(period, str(moviment["date"])), MOCK_DATA))
+def get_moviments(db_connection, period, user):
+    clean_view()
 
-    moviments.sort(key=lambda moviment: (moviment['bank'], moviment['type']))
+    with console.status("[bold green]Buscando movimentações do período..."):
+        db_cursor = db_connection.cursor()
 
-    return moviments
+        period_list = period.split("/")
+        formatted_period = f"{period_list[1]}-{period_list[0]}"
+
+        db_cursor.execute(f"""
+                        SELECT * FROM moviments
+                        WHERE pay_date::text LIKE '{formatted_period}%'
+                        AND username = '{user}'
+                        ORDER BY bank, type
+        """)
+
+        moviments = db_cursor.fetchall()
+
+        db_cursor.close()
+
+        return moviments
