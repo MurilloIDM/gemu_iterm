@@ -21,7 +21,6 @@ def render_table_records(month, data=[]):
     table.add_column("Período", vertical="middle")
     table.add_column("Data", vertical="middle")
     table.add_column("Valor", style="green", justify="right")
-    table.add_column("Concluído?", style="#F2E205", justify="center")
 
     if len(data) == 0:
         console.print("\nOps... 🥲 Não foram encontrados registros para o mês selecionado!")
@@ -33,9 +32,8 @@ def render_table_records(month, data=[]):
                 record["bank"],
                 record["type"],
                 record["period"],
-                record["pay_date"].strftime("%B %d, %Y"),
-                locale.currency(record["value"], grouping=True),
-                "SIM" if record["completed"] else "NÃO"
+                record["pay_date"],
+                locale.currency(record["value"], grouping=True)
             )
 
         console.print("\n")

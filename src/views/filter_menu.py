@@ -8,13 +8,6 @@ from utils.clean_view import clean_view
 console = Console()
 
 
-def validate_period(period):
-    if re.match(r"^(0[1-9]|1[0-2])\/\d{4}$", period):
-        return period
-    else:
-        raise ValueError("Formato inválido. Use MM/YYYY (ex: 06/2025)")
-
-
 def render_filter_menu():
     while True:
         clean_view()

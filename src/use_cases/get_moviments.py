@@ -11,12 +11,9 @@ def get_moviments(db_connection, period, user):
     with console.status("[bold green]Buscando movimentações do período..."):
         db_cursor = db_connection.cursor()
 
-        period_list = period.split("/")
-        formatted_period = f"{period_list[1]}-{period_list[0]}"
-
         db_cursor.execute(f"""
                         SELECT * FROM moviments
-                        WHERE pay_date::text LIKE '{formatted_period}%'
+                        WHERE pay_date LIKE '%{period}'
                         AND username = '{user}'
                         ORDER BY bank, type
         """)
