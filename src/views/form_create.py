@@ -11,7 +11,11 @@ def render_form_create():
 
     bank = Prompt.ask("Informe o banco").upper()
 
-    period = Prompt.ask("Informe o período", choices=["MENSAL", "SEMESTRAL", "ANUAL"])
+    period = Prompt.ask("Informe o período", choices=["MENSAL", "SEMESTRAL", "ANUAL", "PARCELA"])
+
+    if (period == "PARCELA"):
+        parcel = Prompt.ask("Informe a parcela (ex: 8 de 10)")
+        period = f"{period} ({parcel})"
 
     typeMoviment = Prompt.ask("Informe o tipo", choices=["ENTRADA", "SAÍDA"])
 
